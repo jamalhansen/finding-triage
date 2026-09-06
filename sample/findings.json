@@ -1,0 +1,20 @@
+[
+  {
+    "file": "vault_tools/digest/builder.py",
+    "line": 117,
+    "rule": "no-bare-except-equivalent",
+    "message": "Silent fallback to 0 when inbox_path doesn't exist -- consider logging or raising instead"
+  },
+  {
+    "file": "vault_tools/digest/builder.py",
+    "line": 120,
+    "rule": "magic-string-literal",
+    "message": "Status strings \"active\"/\"pending\" are repeated across multiple functions -- consider an enum"
+  },
+  {
+    "file": "vault_tools/digest/builder.py",
+    "line": 125,
+    "rule": "magic-string-literal",
+    "message": "Status string \"pending\" repeated -- consider an enum"
+  }
+]

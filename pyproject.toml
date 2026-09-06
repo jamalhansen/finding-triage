@@ -1,0 +1,24 @@
+[project]
+name = "finding-triage"
+version = "0.1.0"
+description = "Routes static-analysis findings to likely owners using git blame and a local LLM"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "ollama>=0.4.0",
+]
+
+[project.scripts]
+finding-triage = "finding_triage.cli:main"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+
+[dependency-groups]
+dev = [
+    "pytest>=8.0",
+]
