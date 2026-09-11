@@ -11,6 +11,7 @@ def get_blame(repo: Path, file: str, line: int) -> BlameInfo | None:
         ["git", "-C", str(repo), "blame", "-L", f"{line},{line}", "--porcelain", "--", file],
         capture_output=True,
         text=True,
+        check=False,
     )
     if result.returncode != 0:
         return None

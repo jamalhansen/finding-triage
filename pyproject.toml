@@ -3,13 +3,17 @@ name = "finding-triage"
 version = "0.1.0"
 description = "Routes static-analysis findings to likely owners using git blame and a local LLM"
 readme = "README.md"
-requires-python = ">=3.11"
+requires-python = ">=3.12"
 dependencies = [
-    "ollama>=0.4.0",
+    "local-first-common",
+    "pydantic>=2.0",
 ]
 
 [project.scripts]
 finding-triage = "finding_triage.cli:main"
+
+[tool.uv.sources]
+local-first-common = { git = "https://github.com/jamalhansen/local-first-common.git", branch = "main" }
 
 [build-system]
 requires = ["hatchling"]
@@ -21,4 +25,5 @@ testpaths = ["tests"]
 [dependency-groups]
 dev = [
     "pytest>=8.0",
+    "pytest-cov>=7.0.0",
 ]
