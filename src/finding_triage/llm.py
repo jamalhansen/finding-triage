@@ -25,7 +25,7 @@ class TriageAssessment(BaseModel):
 
 def assess(finding: Finding, blame: BlameInfo | None, provider: BaseProvider | None = None) -> dict:
     if provider is None:
-        provider = resolve_provider(provider_name="ollama", model="phi4")
+        provider = resolve_provider(provider_name="ollama", model="phi4", tool_name="finding-triage")
 
     if blame is not None:
         blame_text = (
