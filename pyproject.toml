@@ -6,11 +6,13 @@ readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
     "local-first-common",
+    "typer>=0.15.0",
+    "click<8.3.2",  # 8.3.2 breaks typer 0.24.1 option parsing (same pin as the rest of the fleet)
     "pydantic>=2.0",
 ]
 
 [project.scripts]
-finding-triage = "finding_triage.cli:main"
+finding-triage = "finding_triage.cli:app"
 
 [tool.uv.sources]
 local-first-common = { git = "https://github.com/jamalhansen/local-first-common.git", branch = "main" }

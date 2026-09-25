@@ -1,0 +1,39 @@
+[
+  {
+    "argv": [
+      "{T}/empty.json"
+    ],
+    "exit": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "argv": [
+      "{T}/empty.json",
+      "--repo",
+      "{T}"
+    ],
+    "exit": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "argv": [
+      "{T}/missing.json"
+    ],
+    "exit": 1,
+    "stdout": "",
+    "stderr": "error: <TMP>/missing.json not found\n"
+  },
+  {
+    "argv": [],
+    "exit": 2
+  },
+  {
+    "argv": [
+      "{T}/empty.json",
+      "--nope"
+    ],
+    "exit": 2
+  }
+]

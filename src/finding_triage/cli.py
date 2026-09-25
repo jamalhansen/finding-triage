@@ -1,10 +1,11 @@
 """CLI: read findings, look up blame, score urgency, print sorted results."""
 
-import argparse
 import json
 import sys
 from pathlib import Path
+from typing import Annotated
 
+import typer
 from local_first_common.tracking import register_tool
 
 from finding_triage.blame import get_blame
@@ -49,19 +50,22 @@ def print_results(results: list[TriageResult]) -> None:
         print()
 
 
-def main() -> None:
-    parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("findings", type=Path, help="JSON file of findings")
-    parser.add_argument("--repo", type=Path, default=Path("."), help="git repo the findings apply to")
-    args = parser.parse_args()
+app = typer.Typer(help=__doc__, add_completion=False)
 
-    if not args.findings.exists():
-        print(f"error: {args.findings} not found", file=sys.stderr)
-        raise SystemExit(1)
 
-    results = run(args.findings, args.repo)
+@app.command()
+def main(
+    findings: Annotated[Path, typer.Argument(help="JSON file of findings")],
+    repo: Annotated[Path, typer.Option("--repo", help="git repo the findings apply to")] = Path("."),
+) -> None:
+    """Read findings, look up blame, score urgency, print sorted results."""
+    if not findings.exists():
+        print(f"error: {findings} not found", file=sys.stderr)
+        raise typer.Exit(1)
+
+    results = run(findings, repo)
     print_results(results)
 
 
 if __name__ == "__main__":
-    main()
+    app()
