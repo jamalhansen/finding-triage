@@ -5,9 +5,13 @@ import json
 import sys
 from pathlib import Path
 
+from local_first_common.tracking import register_tool
+
 from finding_triage.blame import get_blame
 from finding_triage.llm import assess
 from finding_triage.models import Finding, TriageResult
+
+_TOOL = register_tool("finding-triage")
 
 _URGENCY_RANK = {"high": 0, "medium": 1, "low": 2}
 
