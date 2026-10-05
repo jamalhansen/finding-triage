@@ -28,18 +28,11 @@ def assess(finding: Finding, blame: BlameInfo | None, provider: BaseProvider | N
         provider = resolve_provider(provider_name="ollama", model="phi4", tool_name="finding-triage")
 
     if blame is not None:
-        blame_text = (
-            f"Last changed by {blame.author} <{blame.author_mail}>, "
-            f"commit summary: \"{blame.summary}\""
-        )
+        blame_text = f'Last changed by {blame.author} <{blame.author_mail}>, commit summary: "{blame.summary}"'
     else:
         blame_text = "No blame information available for this line."
 
-    user_prompt = (
-        f"Finding: [{finding.rule}] {finding.message}\n"
-        f"Location: {finding.file}:{finding.line}\n"
-        f"{blame_text}"
-    )
+    user_prompt = f"Finding: [{finding.rule}] {finding.message}\nLocation: {finding.file}:{finding.line}\n{blame_text}"
 
     result = provider.complete(_SYSTEM_PROMPT, user_prompt, response_model=TriageAssessment)
     return result.model_dump()

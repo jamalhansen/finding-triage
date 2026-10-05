@@ -2,6 +2,7 @@
 
 Re-record deliberately with RECORD_CLI_CONTRACT=1.
 """
+
 import json
 import os
 import subprocess
@@ -45,14 +46,25 @@ def test_findings_are_triaged_and_sorted(tmp_path, monkeypatch):
     from finding_triage import cli
 
     f = tmp_path / "f.json"
-    f.write_text(json.dumps([
-        {"file": "a.py", "line": 1, "rule": "R1", "message": "m1"},
-        {"file": "b.py", "line": 2, "rule": "R2", "message": "m2"},
-    ]))
+    f.write_text(
+        json.dumps(
+            [
+                {"file": "a.py", "line": 1, "rule": "R1", "message": "m1"},
+                {"file": "b.py", "line": 2, "rule": "R2", "message": "m2"},
+            ]
+        )
+    )
     monkeypatch.setattr(cli, "get_blame", lambda repo, file, line: None)
     verdicts = {"R1": "low", "R2": "high"}
-    monkeypatch.setattr(cli, "assess", lambda finding, blame: {
-        "urgency": verdicts[finding.rule], "rationale": "because", "likely_related_to_recent_change": False})
+    monkeypatch.setattr(
+        cli,
+        "assess",
+        lambda finding, blame: {
+            "urgency": verdicts[finding.rule],
+            "rationale": "because",
+            "likely_related_to_recent_change": False,
+        },
+    )
     result = CliRunner().invoke(cli.app, [str(f)])
     assert result.exit_code == 0, result.output
     assert result.output.index("[HIGH") < result.output.index("[LOW")

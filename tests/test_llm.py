@@ -21,9 +21,7 @@ def _mock(urgency="high", rationale="test reason", related=True):
 class TestAssess:
     def test_returns_dict_with_expected_fields(self):
         finding = Finding(file="foo.py", line=10, rule="BLE001", message="blind except")
-        blame = BlameInfo(
-            author="Jamal", author_mail="j@example.com", summary="fix stuff", author_time="2026-09-10"
-        )
+        blame = BlameInfo(author="Jamal", author_mail="j@example.com", summary="fix stuff", author_time="2026-09-10")
         result = assess(finding, blame, provider=_mock())
         assert result == {
             "urgency": "high",
